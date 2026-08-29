@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crystal Noir — Amazon Perfumes</title>
+  <meta name="description" content="Crystal Noir — Clarity and shadow. Grapefruit, Iris, Vetiver. A fresh, faceted masterpiece." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant:ital,wght@0,300;0,700;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+</head>
+<body style="cursor:auto;">
+
+<header id="nav" class="filled" role="banner">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo" aria-label="Amazon Perfumes Home">
+      <img src="assets/images/logo.jpg" alt="Amazon Perfumes" />
+      <div class="nav-wordmark">Amazon Perfumes<small>Luxury Fragrance Maison</small></div>
+    </a>
+    <nav class="nav-center" aria-label="Primary navigation">
+      <a href="index.html#collection">Collection</a>
+      <a href="index.html#story">Our Story</a>
+    </nav>
+    <div class="nav-right">
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div style="background:var(--bg-blush);border-bottom:1px solid var(--border);padding:14px 0;margin-top:90px;">
+  <div class="wrap">
+    <nav aria-label="Breadcrumb" style="display:flex;gap:12px;align-items:center;">
+      <a href="index.html" class="t-label" style="color:var(--white-faint);font-size:.6rem;letter-spacing:.18em;transition:color .3s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--white-faint)'">Home</a>
+      <span style="color:var(--border);">›</span>
+      <a href="index.html#collection" class="t-label" style="color:var(--white-faint);font-size:.6rem;letter-spacing:.18em;transition:color .3s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--white-faint)'">Collection</a>
+      <span style="color:var(--border);">›</span>
+      <span class="t-label" style="color:var(--gold);font-size:.6rem;letter-spacing:.18em;">Crystal Noir</span>
+    </nav>
+  </div>
+</div>
+
+<main class="page-shell" style="padding-top:60px;">
+  <div class="wrap">
+    <div id="product-detail-shell"></div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>© 2024 <span>Amazon Perfumes</span>. All rights reserved.</p>
+      <nav class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+    </div>
+  </div>
+</footer>
+
+<script src="js/shop.js"></script>
+<script>
+  window._pageInitDone = true;
+  goToProduct = function(id) {
+    var map = {'nuit-dor':'nuit-dor.html','lumiere-doree':'lumiere-doree.html','crystal-noir':'crystal-noir.html','ambre-royal':'ambre-royal.html','rose-eternelle':'rose-eternelle.html','blanc-de-blanc':'blanc-de-blanc.html'};
+    window.location.href = map[id] || 'product.html?id=' + id;
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    history.replaceState(null, '', location.pathname + '?id=crystal-noir');
+    renderProductPage();
+    updateCartBadge();
+  });
+</script>
+</body>
+</html>

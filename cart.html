@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart — Amazon Perfumes</title>
+  <meta name="description" content="Your Amazon Perfumes shopping cart." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant:ital,wght@0,300;0,700;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+</head>
+<body style="cursor:auto;">
+
+<header id="nav" class="filled" role="banner">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo" aria-label="Amazon Perfumes Home">
+      <img src="assets/images/logo.jpg" alt="Amazon Perfumes monogram" />
+      <div class="nav-wordmark">Amazon Perfumes<small>Luxury Fragrance Maison</small></div>
+    </a>
+    <nav class="nav-center" aria-label="Primary navigation">
+      <a href="index.html#collection">Collection</a>
+      <a href="index.html#story">Our Story</a>
+    </nav>
+    <div class="nav-right">
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Step Indicator -->
+<div class="step-indicator" style="margin-top:90px;">
+  <div class="step-item">
+    <div class="step-num active">1</div>
+    <span class="step-label active">Cart</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item">
+    <div class="step-num">2</div>
+    <span class="step-label">Shipping</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item">
+    <div class="step-num">3</div>
+    <span class="step-label">Payment</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item">
+    <div class="step-num">4</div>
+    <span class="step-label">Confirmed</span>
+  </div>
+</div>
+
+<main class="page-shell" style="padding-top:60px;">
+  <div class="wrap">
+    <div class="page-header" style="margin-bottom:40px;">
+      <p class="t-label gold">Your Basket</p>
+      <h1 style="font-family:'Cormorant',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:.95;">Shopping <em style="font-style:italic;color:var(--gold);">Cart</em></h1>
+    </div>
+
+    <div class="checkout-layout">
+      <!-- Cart Items -->
+      <div>
+        <div id="empty-cart" class="empty-cart-panel" style="display:none;text-align:center;padding:80px 40px;">
+          <div style="font-size:3rem;margin-bottom:16px;opacity:.3">🛒</div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:12px;">Your cart is empty</h3>
+          <p style="color:var(--white-faint);margin-bottom:32px;">Add your favourite fragrance to begin your order.</p>
+          <a href="index.html#collection" class="btn btn-gold" style="display:inline-flex;">
+            <span>Browse Collection</span>
+          </a>
+        </div>
+        <div id="cart-items"></div>
+      </div>
+
+      <!-- Order Summary -->
+      <aside class="order-summary" id="order-summary">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);">Order Summary</h3>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>© 2024 <span>Amazon Perfumes</span>. All rights reserved.</p>
+      <nav class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+    </div>
+  </div>
+</footer>
+
+<script src="js/shop.js"></script>
+<script>
+window._pageInitDone = true;
+document.addEventListener('DOMContentLoaded', function() {
+  updateCartBadge();
+  renderCartPage();
+});
+</script>
+</body>
+</html>

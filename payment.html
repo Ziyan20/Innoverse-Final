@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Payment — Amazon Perfumes</title>
+  <meta name="description" content="Secure payment gateway for your Amazon Perfumes order." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant:ital,wght@0,300;0,700;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+  <style>
+    .pay-field-group { display: flex; flex-direction: column; gap: 18px; }
+    .upi-input-wrap { position: relative; }
+    .upi-verify-btn {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      padding: 0 20px; background: var(--gold); color: var(--black);
+      font-size: .6rem; letter-spacing: .18em; text-transform: uppercase;
+      font-family: 'Jost', sans-serif; border: none; cursor: pointer;
+      transition: background .3s;
+    }
+    .upi-verify-btn:hover { background: var(--gold-light); }
+    .wallet-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .wallet-opt {
+      padding: 14px 10px; border: 1px solid var(--border);
+      text-align: center; cursor: pointer; transition: all .3s;
+      font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--white-faint); font-family: 'Jost', sans-serif;
+    }
+    .wallet-opt:hover, .wallet-opt.active {
+      border-color: var(--gold); color: var(--gold);
+      background: rgba(139,58,82,.05);
+    }
+    .wallet-opt .w-icon { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+    .cod-box {
+      padding: 24px; background: var(--bg-blush); border: 1px solid var(--border);
+      text-align: center;
+    }
+    .cod-box .cod-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .cod-box p { font-size: .82rem; color: var(--white-faint); line-height: 1.7; }
+    /* Card flip animation */
+    .card-preview {
+      width: 100%; max-width: 340px; height: 200px;
+      perspective: 1000px; margin: 0 auto 24px;
+    }
+    .card-inner {
+      width: 100%; height: 100%;
+      transform-style: preserve-3d; transition: transform .6s;
+      position: relative;
+    }
+    .card-inner.flipped { transform: rotateY(180deg); }
+    .card-face, .card-back {
+      position: absolute; inset: 0;
+      border-radius: 12px; padding: 24px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-face {
+      background: linear-gradient(135deg, #3a1a22 0%, #5a2435 50%, #3a1a22 100%);
+      border: 1px solid rgba(139,58,82,.5);
+    }
+    .card-back {
+      background: linear-gradient(135deg, #5a2435 0%, #3a1a22 100%);
+      border: 1px solid rgba(139,58,82,.5);
+      transform: rotateY(180deg);
+    }
+    .card-chip { width: 36px; height: 28px; background: linear-gradient(135deg,#c9a96e,#a07840); border-radius: 4px; margin-bottom: 24px; }
+    .card-number-display { font-family: 'Courier New', monospace; font-size: 1rem; letter-spacing: .18em; color: var(--white); margin-bottom: 16px; }
+    .card-holder-display { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+    .card-expiry-display { font-size: .65rem; letter-spacing: .12em; color: var(--white); margin-top: 4px; }
+    .card-logo { text-align: right; font-size: .7rem; letter-spacing: .2em; color: var(--gold); opacity: .6; }
+    .card-stripe { height: 40px; background: #0a0a0a; margin: 16px -24px; }
+    .card-cvv-area { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 16px; }
+    .card-cvv-label { font-size: .6rem; color: var(--white-faint); letter-spacing: .1em; }
+    .card-cvv-box { background: var(--white); color: var(--black); padding: 4px 14px; font-size: .9rem; font-family: 'Courier New', monospace; min-width: 50px; text-align: center; }
+  </style>
+</head>
+<body style="cursor:auto;">
+
+<header id="nav" class="filled" role="banner">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo" aria-label="Amazon Perfumes Home">
+      <img src="assets/images/logo.jpg" alt="Amazon Perfumes monogram" />
+      <div class="nav-wordmark">Amazon Perfumes<small>Luxury Fragrance Maison</small></div>
+    </a>
+    <div class="nav-right">
+      <span class="nav-icon" aria-label="Secure checkout" title="256-bit SSL Secured">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- Step Indicator -->
+<div class="step-indicator" style="margin-top:90px;">
+  <div class="step-item">
+    <div class="step-num done">✓</div>
+    <span class="step-label">Cart</span>
+  </div>
+  <div class="step-connector done"></div>
+  <div class="step-item">
+    <div class="step-num done">✓</div>
+    <span class="step-label">Shipping</span>
+  </div>
+  <div class="step-connector done"></div>
+  <div class="step-item">
+    <div class="step-num active">3</div>
+    <span class="step-label active">Payment</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item">
+    <div class="step-num">4</div>
+    <span class="step-label">Confirmed</span>
+  </div>
+</div>
+
+<main class="page-shell" style="padding-top:40px;">
+  <div class="wrap">
+    <div class="page-header" style="margin-top:0;margin-bottom:40px;">
+      <p class="t-label gold">Step 3 of 3 · 🔒 SSL Secured</p>
+      <h1 style="font-family:'Cormorant',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:.95;">Secure <em style="font-style:italic;color:var(--gold);">Payment</em></h1>
+    </div>
+
+    <!-- Shipping address review -->
+    <div id="shipping-review" style="background:var(--bg-blush);border:1px solid var(--border);padding:20px;margin-bottom:32px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <p class="t-label" style="color:var(--gold);font-size:.6rem;letter-spacing:.2em;margin-bottom:8px;">📍 Delivering To</p>
+        <p id="shipping-address-text" style="font-size:.82rem;color:var(--white-faint);line-height:1.7;"></p>
+      </div>
+      <a href="checkout.html" style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-family:'Jost',sans-serif;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;margin-top:4px;">Change</a>
+    </div>
+
+    <div class="checkout-layout">
+      <form id="payment-form" class="checkout-form" novalidate>
+
+        <!-- Payment method tabs -->
+        <span class="t-label" style="color:var(--gold);font-size:.62rem;letter-spacing:.2em;display:block;margin-bottom:14px;">Select Payment Method</span>
+        <div class="pay-method-tabs" role="tablist">
+          <button type="button" class="pay-tab-btn active" data-method="card" role="tab">💳 Credit / Debit Card</button>
+          <button type="button" class="pay-tab-btn" data-method="upi" role="tab">📱 UPI</button>
+          <button type="button" class="pay-tab-btn" data-method="wallet" role="tab">👛 Wallet</button>
+          <button type="button" class="pay-tab-btn" data-method="cod" role="tab">🏦 Cash on Delivery</button>
+        </div>
+
+        <!-- CARD PANEL -->
+        <div class="pay-tab-panel active" id="panel-card">
+          <!-- Visual card preview -->
+          <div class="card-preview">
+            <div class="card-inner" id="card-inner">
+              <div class="card-face">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                  <div class="card-chip"></div>
+                  <div class="card-logo">AMAZON<br>PERFUMES</div>
+                </div>
+                <div class="card-number-display" id="disp-number">•••• •••• •••• ••••</div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+                  <div>
+                    <div class="card-holder-display" id="disp-name">Your Name</div>
+                    <div class="card-expiry-display" id="disp-expiry">MM / YY</div>
+                  </div>
+                  <svg width="40" height="28" viewBox="0 0 50 32" aria-hidden="true">
+                    <circle cx="20" cy="16" r="15" fill="rgba(201,169,110,.4)" />
+                    <circle cx="30" cy="16" r="15" fill="rgba(201,169,110,.25)" />
+                  </svg>
+                </div>
+              </div>
+              <div class="card-back">
+                <div class="card-stripe"></div>
+                <div class="card-cvv-area">
+                  <span class="card-cvv-label">CVV</span>
+                  <div class="card-cvv-box" id="disp-cvv">•••</div>
+                </div>
+                <div style="text-align:center;margin-top:16px;font-size:.6rem;color:var(--white-faint);font-family:'Jost',sans-serif;letter-spacing:.1em;">This card is issued by Amazon Perfumes Secure Payments</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-field-group">
+            <div style="display:flex;gap:8px;margin-bottom:4px;">
+              <button type="button" class="pay-tab-btn active" data-cardtype="credit" style="flex:1;padding:10px;" id="btn-credit">Credit Card</button>
+              <button type="button" class="pay-tab-btn" data-cardtype="debit" style="flex:1;padding:10px;" id="btn-debit">Debit Card</button>
+            </div>
+            <label>
+              <span>Cardholder Name</span>
+              <input type="text" name="cardholder" id="inp-name" placeholder="Name as on card" required autocomplete="cc-name" />
+            </label>
+            <label>
+              <span>Card Number</span>
+              <input type="text" name="cardnumber" id="inp-number" maxlength="19" placeholder="1234 5678 9012 3456" required autocomplete="cc-number" />
+            </label>
+            <div class="field-row two-up">
+              <label>
+                <span>Expiry Date</span>
+                <input type="text" name="expiry" id="inp-expiry" placeholder="MM / YY" maxlength="7" required autocomplete="cc-exp" />
+              </label>
+              <label>
+                <span>CVV</span>
+                <input type="password" name="cvv" id="inp-cvv" maxlength="4" placeholder="•••" required autocomplete="cc-csc" />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPI PANEL -->
+        <div class="pay-tab-panel" id="panel-upi">
+          <div style="margin-bottom:16px;">
+            <p style="font-size:.78rem;color:var(--white-faint);margin-bottom:16px;">Enter your UPI ID to pay directly from your bank account.</p>
+            <label>
+              <span>UPI ID</span>
+              <div class="upi-input-wrap">
+                <input type="text" name="upi-id" placeholder="yourname@upi" style="padding-right:100px;" />
+                <button type="button" class="upi-verify-btn" onclick="verifyUPI(this)">Verify</button>
+              </div>
+            </label>
+          </div>
+          <div style="margin-top:20px;">
+            <p class="t-label" style="font-size:.6rem;letter-spacing:.18em;color:var(--white-faint);margin-bottom:12px;">Or scan QR code</p>
+            <!-- Decorative QR placeholder -->
+            <div style="width:140px;height:140px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg-blush);">
+              <div style="display:grid;grid-template-columns:repeat(7,16px);gap:2px;">
+                <!-- simple QR pattern using CSS squares -->
+                <div style="grid-column:1/4;grid-row:1/4;background:var(--gold);"></div>
+                <div style="grid-column:5/8;grid-row:1/4;background:var(--gold);"></div>
+                <div style="grid-column:1/4;grid-row:5/8;background:var(--gold);"></div>
+                <div style="grid-column:4;grid-row:4;background:var(--gold);"></div>
+                <div style="grid-column:5;grid-row:5;background:var(--gold);"></div>
+                <div style="grid-column:6;grid-row:6;background:var(--gold);"></div>
+                <div style="grid-column:7;grid-row:7;background:var(--gold);"></div>
+              </div>
+            </div>
+            <p style="font-size:.65rem;color:var(--white-faint);margin-top:8px;font-family:'Jost',sans-serif;">Scan with any UPI app to pay</p>
+          </div>
+        </div>
+
+        <!-- WALLET PANEL -->
+        <div class="pay-tab-panel" id="panel-wallet">
+          <p style="font-size:.78rem;color:var(--white-faint);margin-bottom:20px;">Select your preferred wallet or net banking option.</p>
+          <div class="wallet-options">
+            <div class="wallet-opt" onclick="selectWallet(this)"><span class="w-icon">📱</span>PayPal</div>
+            <div class="wallet-opt" onclick="selectWallet(this)"><span class="w-icon">🍎</span>Apple Pay</div>
+            <div class="wallet-opt" onclick="selectWallet(this)"><span class="w-icon">🤖</span>Google Pay</div>
+            <div class="wallet-opt" onclick="selectWallet(this)"><span class="w-icon">💰</span>Amazon Pay</div>
+            <div class="wallet-opt" onclick="selectWallet(this)"><span class="w-icon">🏦</span>Net Banking</div>
+            <div class="wallet-opt" onclick="selectWallet(this)"><span class="w-icon">💎</span>Klarna</div>
+          </div>
+          <div id="wallet-selected" style="display:none;margin-top:16px;padding:16px;background:var(--bg-blush);border:1px solid var(--gold);font-size:.78rem;color:var(--black);">
+            <span id="wallet-name"></span> selected. Click "Place Order" to proceed.
+          </div>
+        </div>
+
+        <!-- CASH ON DELIVERY PANEL -->
+        <div class="pay-tab-panel" id="panel-cod">
+          <div class="cod-box">
+            <div class="cod-icon">💵</div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:12px;">Cash on Delivery</h3>
+            <p>Pay in cash when your order arrives. Our delivery partner will collect the amount at your door.</p>
+            <div style="margin-top:20px;padding:12px;background:rgba(139,58,82,.06);border:1px solid var(--border);text-align:left;">
+              <p style="font-size:.72rem;color:var(--white-faint);font-family:'Jost',sans-serif;line-height:1.7;">
+                ✓ No online payment required<br>
+                ✓ Pay exact amount or use cards on delivery<br>
+                ✓ Available on orders up to $500
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security badges -->
+        <div style="display:flex;gap:16px;align-items:center;padding:14px 16px;background:var(--bg-blush);border:1px solid var(--border);margin-top:20px;flex-wrap:wrap;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.3" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <span class="t-label" style="font-size:.56rem;letter-spacing:.14em;color:var(--white-faint);">🔒 256-bit SSL · PCI DSS Compliant · Verified by Visa · Mastercard SecureCode</span>
+        </div>
+
+        <div style="margin-top:20px;">
+          <button type="submit" class="btn btn-gold" id="pay-btn" style="width:100%;justify-content:center;font-size:.78rem;padding:20px 40px;">
+            <span id="pay-btn-text">Place Order →</span>
+          </button>
+        </div>
+        <p id="payment-error" style="display:none;color:#e88;font-size:.75rem;margin-top:10px;text-align:center;font-family:'Jost',sans-serif;"></p>
+      </form>
+
+      <!-- Order Summary -->
+      <aside class="order-summary" id="payment-summary">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);">Order Total</h3>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>© 2024 <span>Amazon Perfumes</span>. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/shop.js"></script>
+<script>
+var selectedWallet = '';
+
+window._pageInitDone = true;
+document.addEventListener('DOMContentLoaded', function() {
+  updateCartBadge();
+  renderPaymentSummary();
+  loadShippingReview();
+
+  // Payment method tabs
+  document.querySelectorAll('.pay-tab-btn[data-method]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.pay-tab-btn[data-method]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.pay-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('panel-' + btn.dataset.method).classList.add('active');
+      var payBtnText = document.getElementById('pay-btn-text');
+      if (btn.dataset.method === 'cod') {
+        payBtnText.textContent = 'Confirm Order (COD) →';
+      } else if (btn.dataset.method === 'upi') {
+        payBtnText.textContent = 'Pay via UPI →';
+      } else if (btn.dataset.method === 'wallet') {
+        payBtnText.textContent = 'Pay via Wallet →';
+      } else {
+        payBtnText.textContent = 'Place Order →';
+      }
+    });
+  });
+
+  // Credit/Debit toggle
+  document.querySelectorAll('[data-cardtype]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-cardtype]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+
+  // Live card preview updates
+  document.getElementById('inp-name').addEventListener('input', function() {
+    document.getElementById('disp-name').textContent = this.value.toUpperCase() || 'Your Name';
+  });
+  document.getElementById('inp-number').addEventListener('input', function() {
+    var v = this.value.replace(/\D/g, '').slice(0, 16);
+    var fmt = v.replace(/(.{4})/g, '$1 ').trim();
+    this.value = fmt;
+    document.getElementById('disp-number').textContent = (fmt + ' •••• •••• •••• ••••').slice(0, 19) || '•••• •••• •••• ••••';
+  });
+  document.getElementById('inp-expiry').addEventListener('input', function() {
+    var v = this.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 3) v = v.slice(0, 2) + ' / ' + v.slice(2);
+    this.value = v;
+    document.getElementById('disp-expiry').textContent = this.value || 'MM / YY';
+  });
+  document.getElementById('inp-cvv').addEventListener('focus', function() {
+    document.getElementById('card-inner').classList.add('flipped');
+  });
+  document.getElementById('inp-cvv').addEventListener('blur', function() {
+    document.getElementById('card-inner').classList.remove('flipped');
+  });
+  document.getElementById('inp-cvv').addEventListener('input', function() {
+    var v = this.value.replace(/\D/g, '').slice(0, 4);
+    document.getElementById('disp-cvv').textContent = v || '•••';
+  });
+
+  // Form submission
+  document.getElementById('payment-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var errEl = document.getElementById('payment-error');
+    var activeMethod = document.querySelector('.pay-tab-btn[data-method].active').dataset.method;
+
+    if (activeMethod === 'card') {
+      var name = document.getElementById('inp-name').value.trim();
+      var num  = document.getElementById('inp-number').value.replace(/\s/g, '');
+      var exp  = document.getElementById('inp-expiry').value.trim();
+      var cvv  = document.getElementById('inp-cvv').value.trim();
+      if (!name || num.length < 16 || !exp || cvv.length < 3) {
+        errEl.textContent = 'Please fill in all card details correctly.';
+        errEl.style.display = 'block';
+        return;
+      }
+    } else if (activeMethod === 'upi') {
+      var upiId = document.querySelector('input[name="upi-id"]').value.trim();
+      if (!upiId || !upiId.includes('@')) {
+        errEl.textContent = 'Please enter a valid UPI ID (e.g. name@upi).';
+        errEl.style.display = 'block';
+        return;
+      }
+    } else if (activeMethod === 'wallet' && !selectedWallet) {
+      errEl.textContent = 'Please select a wallet option.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    errEl.style.display = 'none';
+    var btn = document.getElementById('pay-btn');
+    btn.disabled = true;
+    document.getElementById('pay-btn-text').textContent = 'Processing...';
+    btn.style.opacity = '.7';
+
+    // Simulate payment processing
+    setTimeout(function() {
+      // Generate order number
+      var orderNum = 'AP-' + Date.now().toString(36).toUpperCase().slice(-8);
+      localStorage.setItem('amazonPerfumesOrder', JSON.stringify({
+        orderNumber: orderNum,
+        method: activeMethod,
+        cart: readCart(),
+        shipping: JSON.parse(localStorage.getItem('amazonPerfumesShipping') || '{}'),
+        total: getCartTotal() + ((JSON.parse(localStorage.getItem('amazonPerfumesShipping') || '{}')).deliveryCost || 0),
+        timestamp: new Date().toISOString()
+      }));
+      // Clear cart
+      localStorage.removeItem('amazonPerfumesCart');
+      window.location.href = 'order-success.html';
+    }, 2200);
+  });
+});
+
+function loadShippingReview() {
+  var shipping = JSON.parse(localStorage.getItem('amazonPerfumesShipping') || '{}');
+  var el = document.getElementById('shipping-address-text');
+  if (shipping.fullname) {
+    el.innerHTML =
+      '<strong style="color:var(--black);">' + shipping.fullname + '</strong><br>' +
+      shipping.address + (shipping.address2 ? ', ' + shipping.address2 : '') + '<br>' +
+      shipping.city + ', ' + shipping.state + ' ' + shipping.zip + ', ' + shipping.country + '<br>' +
+      '<span style="color:var(--white-faint);">' + (shipping.phone || '') + '</span>';
+  } else {
+    el.textContent = 'No shipping address found.';
+    document.getElementById('shipping-review').innerHTML += ' <a href="checkout.html" style="color:var(--gold);font-size:.75rem;">Add address</a>';
+  }
+}
+
+function renderPaymentSummary() {
+  var summary = document.getElementById('payment-summary');
+  if (!summary) return;
+  var cart = readCart();
+  var shipping = JSON.parse(localStorage.getItem('amazonPerfumesShipping') || '{}');
+  var deliveryCost = shipping.deliveryCost || 0;
+  var subtotal = getCartTotal(cart);
+  var total = subtotal + deliveryCost;
+
+  var itemsHTML = cart.map(function(item) {
+    return '<div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">' +
+      '<div style="width:52px;height:68px;overflow:hidden;border:1px solid var(--border);flex-shrink:0;">' +
+        '<img src="' + item.image + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;" />' +
+      '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-size:.78rem;color:var(--black);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + item.name + '</div>' +
+        '<div style="font-size:.62rem;color:var(--white-faint);font-family:\'Jost\',sans-serif;">' + item.size + ' · Qty: ' + item.qty + '</div>' +
+      '</div>' +
+      '<div style="font-family:\'Cormorant Garamond\',serif;font-size:.95rem;color:var(--gold);flex-shrink:0;">' + currency(item.price * item.qty) + '</div>' +
+    '</div>';
+  }).join('');
+
+  summary.innerHTML =
+    '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);">Order Total</h3>' +
+    itemsHTML +
+    '<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:.8rem;color:var(--black);"><span>Subtotal</span><span>' + currency(subtotal) + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:.8rem;color:var(--black);border-bottom:1px solid var(--border);"><span>Shipping</span><span style="color:' + (deliveryCost ? 'var(--black)' : '#2e7d4f') + ';">' + (deliveryCost ? currency(deliveryCost) : 'Free') + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:16px 0;font-size:1rem;">' +
+      '<span style="font-family:\'Cormorant Garamond\',serif;color:var(--black);">Total</span>' +
+      '<span style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;color:var(--gold);">' + currency(total) + '</span>' +
+    '</div>' +
+    '<div style="padding:12px;background:rgba(46,125,79,.06);border:1px solid rgba(46,125,79,.25);font-size:.65rem;color:#2e7d4f;font-family:\'Jost\',sans-serif;letter-spacing:.1em;">🔒 Payment is 100% secure &amp; encrypted</div>';
+}
+
+function verifyUPI(btn) {
+  var input = btn.previousElementSibling || btn.parentElement.querySelector('input');
+  var upiId = input ? input.value.trim() : '';
+  if (!upiId || !upiId.includes('@')) {
+    alert('Please enter a valid UPI ID (e.g. name@upi)');
+    return;
+  }
+  btn.textContent = '✓ Verified';
+  btn.style.background = '#2e8b57';
+  setTimeout(function() { btn.textContent = 'Verify'; btn.style.background = ''; }, 3000);
+}
+
+function selectWallet(el) {
+  document.querySelectorAll('.wallet-opt').forEach(function(w) { w.classList.remove('active'); });
+  el.classList.add('active');
+  selectedWallet = el.textContent.replace(/./u, '').trim();
+  document.getElementById('wallet-selected').style.display = 'block';
+  document.getElementById('wallet-name').textContent = el.querySelector('.w-icon').textContent + ' ' + el.textContent.replace(/\p{Emoji}/u, '').trim();
+}
+</script>
+</body>
+</html>

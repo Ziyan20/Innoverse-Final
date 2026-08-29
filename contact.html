@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Amazon Perfumes</title>
+  <meta name="description" content="Get in touch with Amazon Perfumes. Enquire about bespoke fragrances, orders, press, or visit our Paris atelier." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:ital,wght@0,300;0,700;1,300;1,700&family=Inter:wght@300;400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+  <style>
+    /* ── Page-level overrides for light BG ─────────────────── */
+    body {
+      background: var(--white);
+      color: var(--black);
+      cursor: auto;
+    }
+    button { cursor: pointer; }
+
+    /* ── Contact Hero ───────────────────────────────────────── */
+    .contact-hero {
+      padding: clamp(140px, 18vw, 220px) 0 clamp(80px, 10vw, 120px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-blush);
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-hero::before {
+      content: 'Contact';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant', serif;
+      font-size: clamp(6rem, 20vw, 22rem);
+      font-weight: 700;
+      color: rgba(139,58,82,.04);
+      letter-spacing: .08em;
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .contact-hero-label {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin-bottom: 28px;
+    }
+    .contact-hero-label .line { margin: 0; }
+    .contact-hero h1 {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(3rem, 7vw, 8rem);
+      font-weight: 300;
+      line-height: .9;
+      letter-spacing: -.02em;
+      color: var(--black);
+      margin-bottom: 24px;
+    }
+    .contact-hero h1 em { font-style: italic; color: var(--gold); display: block; }
+    .contact-hero p {
+      font-size: .95rem;
+      color: var(--white-dim);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.85;
+    }
+
+    /* ── Contact Body ───────────────────────────────────────── */
+    .contact-body {
+      padding: clamp(80px, 12vw, 160px) 0;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(60px, 8vw, 140px);
+      align-items: start;
+    }
+
+    /* ── Info Column ────────────────────────────────────────── */
+    .contact-info-title {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: .95;
+      letter-spacing: -.01em;
+      color: var(--black);
+      margin-bottom: 20px;
+    }
+    .contact-info-title em { font-style: italic; color: var(--gold); }
+    .contact-info-desc {
+      font-size: .9rem;
+      color: var(--white-dim);
+      line-height: 1.9;
+      margin-bottom: 56px;
+    }
+
+    .contact-detail-block {
+      display: flex; flex-direction: column; gap: 32px;
+      margin-bottom: 56px;
+    }
+    .contact-detail-item {
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .contact-detail-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+    }
+    .contact-detail-icon svg { width: 18px; height: 18px; }
+    .contact-detail-lbl {
+      font-size: .6rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      font-family: 'Jost', sans-serif;
+      margin-bottom: 6px;
+    }
+    .contact-detail-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--black);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .contact-detail-val a {
+      color: var(--black);
+      border-bottom: 1px solid transparent;
+      transition: color .3s, border-color .3s;
+    }
+    .contact-detail-val a:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* Enquiry types */
+    .contact-types-title {
+      font-size: .62rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-family: 'Jost', sans-serif;
+    }
+    .contact-types {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .contact-type-item {
+      display: flex; align-items: center; gap: 14px;
+      font-size: .82rem;
+      color: var(--white-dim);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .contact-type-item:last-child { border-bottom: none; }
+    .contact-type-item::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: .5rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Enquiry Form ───────────────────────────────────────── */
+    .enquiry-form-wrap {
+      background: var(--bg-blush);
+      border: 1px solid var(--border);
+      padding: clamp(40px, 6vw, 72px);
+    }
+    .enquiry-form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+    .enquiry-form-title em { font-style: italic; color: var(--gold); }
+    .enquiry-form-sub {
+      font-size: .82rem;
+      color: var(--white-faint);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    /* Form fields */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      font-family: 'Jost', sans-serif;
+    }
+    .form-label span { color: var(--gold); margin-left: 2px; }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 14px 18px;
+      color: var(--black);
+      font-family: 'Jost', sans-serif;
+      font-size: .88rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color .3s;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: var(--white-faint); }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus { border-color: var(--gold); }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b3a52' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    .form-select option { background: var(--white); color: var(--black); }
+    .form-textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+
+    /* Consent */
+    .form-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .form-consent input[type="checkbox"] {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .form-consent-text {
+      font-size: .78rem;
+      color: var(--white-faint);
+      line-height: 1.6;
+    }
+    .form-consent-text a {
+      color: var(--gold);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s;
+    }
+    .form-consent-text a:hover { border-color: var(--gold); }
+
+    /* Submit */
+    .form-submit-row {
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+    .btn-submit {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: 'Jost', sans-serif;
+      font-size: .72rem;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      padding: 18px 52px;
+      background: var(--gold);
+      color: var(--black);
+      border: 1px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+      transition: background .3s, color .3s;
+      cursor: pointer;
+    }
+    .btn-submit:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .form-submit-note {
+      font-size: .72rem;
+      color: var(--white-faint);
+      letter-spacing: .08em;
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .form-success.show { display: block; }
+    .form-success-icon {
+      width: 64px; height: 64px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      color: var(--gold);
+      font-size: 1.4rem;
+    }
+    .form-success h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--black);
+      margin-bottom: 12px;
+    }
+    .form-success p {
+      font-size: .88rem;
+      color: var(--white-dim);
+      line-height: 1.8;
+    }
+
+    /* ── Map / Atelier strip ────────────────────────────────── */
+    .atelier-strip {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: clamp(60px, 8vw, 100px) 0;
+    }
+    .atelier-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: clamp(32px, 4vw, 60px);
+      text-align: center;
+    }
+    .atelier-item {}
+    .atelier-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .atelier-item-label {
+      font-size: .62rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      font-family: 'Jost', sans-serif;
+      margin-bottom: 8px;
+    }
+    .atelier-item-desc {
+      font-size: .88rem;
+      color: rgba(255,255,255,.45);
+      line-height: 1.7;
+    }
+
+    /* ── Error states ───────────────────────────────────────── */
+    .form-group.error .form-input,
+    .form-group.error .form-select,
+    .form-group.error .form-textarea { border-color: #c0504a; }
+    .form-error-msg {
+      font-size: .68rem;
+      color: #c0504a;
+      letter-spacing: .05em;
+      display: none;
+    }
+    .form-group.error .form-error-msg { display: block; }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .atelier-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .enquiry-form-wrap { padding: 32px 24px; }
+      .form-submit-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ CURSOR ═══════════════════════════════════════════════ -->
+<div id="cursor" aria-hidden="true">
+  <div id="cursor-ball"></div>
+  <div id="cursor-dot2"></div>
+</div>
+
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
+<div id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <button class="menu-close" id="menu-close" aria-label="Close menu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="index.html#collection">Collection</a>
+  <a href="index.html#story">Our Story</a>
+  <a href="index.html#testimonials">Reviews</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- ══ NAVIGATION ════════════════════════════════════════════ -->
+<header id="nav" role="banner">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo" aria-label="Amazon Perfumes — Home">
+      <img src="assets/images/logo.jpg" alt="Amazon Perfumes monogram" />
+      <div class="nav-wordmark">
+        Amazon Perfumes
+        <small>Luxury Fragrance Maison</small>
+      </div>
+    </a>
+
+    <nav class="nav-center" aria-label="Primary navigation">
+      <a href="index.html#collection">Collection</a>
+      <a href="index.html#story">Our Story</a>
+      <a href="index.html#viewer">Explore</a>
+      <a href="index.html#testimonials">Reviews</a>
+      <a href="contact.html" aria-current="page" style="color:var(--gold)">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </a>
+      <button id="hamburger" class="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ HERO ══════════════════════════════════════════════ -->
+  <section class="contact-hero" aria-labelledby="contact-hero-heading">
+    <div class="wrap">
+      <div class="contact-hero-label">
+        <span class="line" style="margin:0"></span>
+        <p class="t-label gold">Get In Touch</p>
+        <span class="line" style="margin:0"></span>
+      </div>
+      <h1 id="contact-hero-heading">
+        Let's
+        <em>Connect</em>
+      </h1>
+      <p>
+        Whether you're seeking a bespoke creation, have a question about an order, or simply wish to experience our atelier — we are here to guide you.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT BODY ══════════════════════════════════════ -->
+  <section class="contact-body" aria-label="Contact information and enquiry form">
+    <div class="wrap">
+      <div class="contact-grid">
+
+        <!-- ── Left: Info ──────────────────────────────────── -->
+        <div class="contact-info" aria-label="Contact details">
+          <p class="t-label gold" style="margin-bottom:20px">Our Maison</p>
+          <span class="line left"></span>
+          <h2 class="contact-info-title">
+            A Conversation<br>
+            <em>Worth Having</em>
+          </h2>
+          <p class="contact-info-desc">
+            Our client relations team is available Monday through Saturday, 9 am — 7 pm CET. We respond to every enquiry personally, with the care you deserve.
+          </p>
+
+          <!-- Contact details -->
+          <div class="contact-detail-block">
+
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-detail-lbl">Our Atelier</div>
+                <div class="contact-detail-val">
+                  14 Rue du Faubourg Saint-Honoré<br>
+                  75008 Paris, France
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.06 2.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-detail-lbl">Phone</div>
+                <div class="contact-detail-val">
+                  <a href="tel:+33142680100">+33 1 42 68 01 00</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-detail-lbl">Email</div>
+                <div class="contact-detail-val">
+                  <a href="mailto:hello@amazonperfumes.com">hello@amazonperfumes.com</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-detail-lbl">Opening Hours</div>
+                <div class="contact-detail-val">
+                  Mon – Sat &nbsp;·&nbsp; 9:00 – 19:00 CET<br>
+                  <span style="font-size:.8rem;color:var(--white-faint)">Closed Sundays &amp; Public Holidays</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /detail-block -->
+
+          <!-- Enquiry types -->
+          <div>
+            <p class="contact-types-title">We Can Help With</p>
+            <div class="contact-types">
+              <div class="contact-type-item">Bespoke &amp; Personalised Fragrances</div>
+              <div class="contact-type-item">Order Tracking &amp; Returns</div>
+              <div class="contact-type-item">Wholesale &amp; Retail Partnerships</div>
+              <div class="contact-type-item">Press, Media &amp; Collaborations</div>
+              <div class="contact-type-item">Atelier Visit &amp; Private Events</div>
+              <div class="contact-type-item">Gift Engraving &amp; Bespoke Packaging</div>
+            </div>
+          </div>
+
+        </div><!-- /contact-info -->
+
+        <!-- ── Right: Enquiry Form ──────────────────────────── -->
+        <div class="enquiry-form-wrap" role="region" aria-label="Enquiry form">
+
+          <!-- Form content (hidden on success) -->
+          <div id="form-content">
+            <h2 class="enquiry-form-title">Send an <em>Enquiry</em></h2>
+            <p class="enquiry-form-sub">
+              Fill in the details below and a member of our client relations team will respond within one business day.
+            </p>
+
+            <form id="enquiry-form" novalidate aria-label="Enquiry submission form">
+
+              <div class="form-row">
+                <div class="form-group" id="fg-firstname">
+                  <label class="form-label" for="firstname">First Name <span aria-hidden="true">*</span></label>
+                  <input class="form-input" type="text" id="firstname" name="firstname"
+                         placeholder="Henri" autocomplete="given-name" required />
+                  <span class="form-error-msg" role="alert">Please enter your first name.</span>
+                </div>
+                <div class="form-group" id="fg-lastname">
+                  <label class="form-label" for="lastname">Last Name <span aria-hidden="true">*</span></label>
+                  <input class="form-input" type="text" id="lastname" name="lastname"
+                         placeholder="Leclerc" autocomplete="family-name" required />
+                  <span class="form-error-msg" role="alert">Please enter your last name.</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group" id="fg-email">
+                  <label class="form-label" for="email">Email Address <span aria-hidden="true">*</span></label>
+                  <input class="form-input" type="email" id="email" name="email"
+                         placeholder="you@example.com" autocomplete="email" required />
+                  <span class="form-error-msg" role="alert">Please enter a valid email address.</span>
+                </div>
+                <div class="form-group" id="fg-phone">
+                  <label class="form-label" for="phone">Phone Number</label>
+                  <input class="form-input" type="tel" id="phone" name="phone"
+                         placeholder="+33 1 00 00 00 00" autocomplete="tel" />
+                </div>
+              </div>
+
+              <div class="form-group" id="fg-subject">
+                <label class="form-label" for="subject">Enquiry Type <span aria-hidden="true">*</span></label>
+                <select class="form-select" id="subject" name="subject" required>
+                  <option value="" disabled selected>Select a topic…</option>
+                  <option value="bespoke">Bespoke &amp; Personalised Fragrance</option>
+                  <option value="order">Order Tracking &amp; Returns</option>
+                  <option value="wholesale">Wholesale &amp; Retail Partnership</option>
+                  <option value="press">Press, Media &amp; Collaboration</option>
+                  <option value="visit">Atelier Visit &amp; Private Event</option>
+                  <option value="engraving">Gift Engraving &amp; Packaging</option>
+                  <option value="general">General Enquiry</option>
+                </select>
+                <span class="form-error-msg" role="alert">Please select an enquiry type.</span>
+              </div>
+
+              <div class="form-group" id="fg-order">
+                <label class="form-label" for="order-ref">Order Reference <span style="opacity:.5;font-size:.55rem;">(if applicable)</span></label>
+                <input class="form-input" type="text" id="order-ref" name="order_ref"
+                       placeholder="AP-000000" />
+              </div>
+
+              <div class="form-group" id="fg-message">
+                <label class="form-label" for="message">Your Message <span aria-hidden="true">*</span></label>
+                <textarea class="form-textarea" id="message" name="message"
+                          placeholder="Tell us how we can help you…" required></textarea>
+                <span class="form-error-msg" role="alert">Please include a message.</span>
+              </div>
+
+              <div class="form-consent">
+                <input type="checkbox" id="consent" name="consent" required />
+                <label class="form-consent-text" for="consent">
+                  I agree to the Amazon Perfumes <a href="#">Privacy Policy</a> and consent to being contacted in relation to my enquiry. We will never share your details with third parties.
+                </label>
+              </div>
+
+              <div class="form-submit-row">
+                <button type="submit" class="btn-submit" id="submit-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                  Send Enquiry
+                </button>
+                <span class="form-submit-note">We reply within 1 business day</span>
+              </div>
+
+            </form>
+          </div><!-- /form-content -->
+
+          <!-- Success message -->
+          <div class="form-success" id="form-success" aria-live="polite">
+            <div class="form-success-icon" aria-hidden="true">✓</div>
+            <h3>Enquiry Received</h3>
+            <p>
+              Thank you for reaching out. A member of our client relations team will<br>
+              respond to you personally within one business day.
+            </p>
+          </div>
+
+        </div><!-- /enquiry-form-wrap -->
+
+      </div><!-- /contact-grid -->
+    </div>
+  </section>
+
+  <!-- ══ ATELIER STRIP ══════════════════════════════════════ -->
+  <section class="atelier-strip" aria-label="About our atelier">
+    <div class="wrap">
+      <div class="atelier-inner">
+
+        <div class="atelier-item">
+          <div class="atelier-num">30+</div>
+          <div class="atelier-item-label">Years of Mastery</div>
+          <div class="atelier-item-desc">Three decades of olfactory expertise, born in Paris and the Amazon basin.</div>
+        </div>
+
+        <div class="atelier-item">
+          <div class="atelier-num">120</div>
+          <div class="atelier-item-label">Unique Fragrances</div>
+          <div class="atelier-item-desc">From rare botanicals to signature house blends — a universe of scent awaits.</div>
+        </div>
+
+        <div class="atelier-item">
+          <div class="atelier-num">24h</div>
+          <div class="atelier-item-label">Response Time</div>
+          <div class="atelier-item-desc">Every enquiry answered personally by our client relations team.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <img src="assets/images/logo.jpg" alt="Amazon Perfumes" />
+          <div class="word">Amazon Perfumes</div>
+        </div>
+        <p>Rare botanicals from the Amazon rainforest, distilled by master perfumers in Paris since 1994.</p>
+        <div class="socials">
+          <a href="#" class="social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="#" class="social" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+          <a href="#" class="social" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.03-2.83.19-.77 1.26-5.33 1.26-5.33s-.32-.64-.32-1.59c0-1.49.86-2.61 1.93-2.61.91 0 1.35.68 1.35 1.5 0 .91-.58 2.28-.88 3.55-.25 1.06.53 1.92 1.57 1.92 1.88 0 3.14-2.4 3.14-5.24 0-2.16-1.46-3.78-4.1-3.78-2.98 0-4.83 2.23-4.83 4.72 0 .86.25 1.46.63 1.93.18.21.2.3.14.54-.04.18-.14.6-.18.77-.06.25-.24.34-.44.25-1.25-.51-1.83-1.89-1.83-3.43 0-2.56 2.16-5.63 6.44-5.63 3.44 0 5.71 2.49 5.71 5.17 0 3.55-1.97 6.2-4.87 6.2-.97 0-1.89-.52-2.2-1.11l-.6 2.32c-.22.84-.82 1.89-1.22 2.52.92.28 1.89.43 2.9.43 5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Collection</h5>
+        <ul>
+          <li><a href="nuit-dor.html">Nuit d'Or</a></li>
+          <li><a href="lumiere-doree.html">Lumière Dorée</a></li>
+          <li><a href="ambre-royal.html">Ambre Royal</a></li>
+          <li><a href="rose-eternelle.html">Rose Éternelle</a></li>
+          <li><a href="crystal-noir.html">Crystal Noir</a></li>
+          <li><a href="blanc-de-blanc.html">Blanc de Blanc</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Maison</h5>
+        <ul>
+          <li><a href="index.html#story">Our Story</a></li>
+          <li><a href="index.html#viewer">360° Explorer</a></li>
+          <li><a href="index.html#testimonials">Reviews</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Customer Care</h5>
+        <ul>
+          <li><a href="cart.html">Shopping Cart</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p style="font-size:.72rem;color:var(--white-faint)">
+        © 2026 Amazon Perfumes. All rights reserved. Crafted in Paris.
+      </p>
+      <p style="font-size:.72rem;color:var(--white-faint)">
+        Luxury Fragrance Maison · Est. 1994
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ SCRIPTS ════════════════════════════════════════════════ -->
+<script>
+  /* ── Nav fill on scroll ──────────────────────────────────── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('filled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── Mobile menu ─────────────────────────────────────────── */
+  const mobileMenu = document.getElementById('mobile-menu');
+  document.getElementById('hamburger').addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  document.getElementById('menu-close').addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  /* ── Cursor (desktop only) ───────────────────────────────── */
+  if (window.matchMedia('(pointer:fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ball   = document.getElementById('cursor-ball');
+    const dot    = document.getElementById('cursor-dot2');
+    let mx = 0, my = 0, bx = 0, by = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function loop() {
+      bx += (mx - bx) * .12; by += (my - by) * .12;
+      ball.style.left = bx + 'px'; ball.style.top = by + 'px';
+      dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button,input,select,textarea,.pcard').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+  }
+
+  /* ── Cart count from localStorage ───────────────────────── */
+  try {
+    const cart = JSON.parse(localStorage.getItem('ap_cart') || '[]');
+    const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    if (count > 0) document.getElementById('cart-count').textContent = count;
+  } catch (e) {}
+
+  /* ── Enquiry Form Validation & Submit ────────────────────── */
+  const form        = document.getElementById('enquiry-form');
+  const formContent = document.getElementById('form-content');
+  const formSuccess = document.getElementById('form-success');
+
+  function validateField(inputEl, groupId) {
+    const group = document.getElementById(groupId);
+    if (!group) return true;
+    const valid = inputEl.checkValidity();
+    group.classList.toggle('error', !valid);
+    return valid;
+  }
+
+  // Live validation on blur
+  [
+    { id: 'firstname', group: 'fg-firstname' },
+    { id: 'lastname',  group: 'fg-lastname'  },
+    { id: 'email',     group: 'fg-email'     },
+    { id: 'subject',   group: 'fg-subject'   },
+    { id: 'message',   group: 'fg-message'   },
+  ].forEach(({ id, group }) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('blur', () => validateField(el, group));
+      el.addEventListener('input', () => {
+        if (document.getElementById(group).classList.contains('error')) {
+          validateField(el, group);
+        }
+      });
+    }
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    let allValid = true;
+
+    // Validate required fields
+    const fields = [
+      { id: 'firstname', group: 'fg-firstname' },
+      { id: 'lastname',  group: 'fg-lastname'  },
+      { id: 'email',     group: 'fg-email'     },
+      { id: 'subject',   group: 'fg-subject'   },
+      { id: 'message',   group: 'fg-message'   },
+    ];
+
+    fields.forEach(({ id, group }) => {
+      const el = document.getElementById(id);
+      if (!validateField(el, group)) allValid = false;
+    });
+
+    // Consent check
+    const consent = document.getElementById('consent');
+    if (!consent.checked) {
+      consent.closest('.form-consent').style.outline = '1px solid #c0504a';
+      allValid = false;
+    } else {
+      consent.closest('.form-consent').style.outline = 'none';
+    }
+
+    if (!allValid) return;
+
+    // Simulate submission — show success state
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      formContent.style.display = 'none';
+      formSuccess.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 900);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed — Amazon Perfumes</title>
+  <meta name="description" content="Your Amazon Perfumes order has been confirmed. Thank you for your purchase." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant:ital,wght@0,300;0,700;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+  <style>
+    @keyframes confetti {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    .confetti-piece {
+      position: fixed;
+      width: 8px; height: 8px;
+      animation: confetti 3s ease-in forwards;
+      pointer-events: none;
+      z-index: 99999;
+    }
+    @keyframes checkmark {
+      0%   { stroke-dashoffset: 100; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .checkmark-svg circle {
+      animation: successPop .6s cubic-bezier(.16,1,.3,1) both;
+    }
+    .checkmark-svg path {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: checkmark .8s .4s ease forwards;
+    }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 14px 0;
+    }
+    .timeline-item:not(:last-child) {
+      border-bottom: 1px solid var(--border);
+    }
+    .tl-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      flex-shrink: 0; display: flex; align-items: center;
+      justify-content: center; font-size: .8rem;
+      border: 1px solid var(--gold); color: var(--gold);
+      background: rgba(139,58,82,.08);
+    }
+    .tl-dot.done { background: var(--gold); color: var(--white); }
+    .tl-content .tl-title {
+      font-size: .78rem; color: var(--black); margin-bottom: 2px;
+      font-family: 'Jost', sans-serif; letter-spacing: .04em;
+    }
+    .tl-content .tl-sub {
+      font-size: .65rem; color: var(--white-faint);
+      font-family: 'Jost', sans-serif;
+    }
+  </style>
+</head>
+<body style="cursor:auto;">
+
+<header id="nav" class="filled" role="banner">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo" aria-label="Amazon Perfumes Home">
+      <img src="assets/images/logo.jpg" alt="Amazon Perfumes monogram" />
+      <div class="nav-wordmark">Amazon Perfumes<small>Luxury Fragrance Maison</small></div>
+    </a>
+    <div class="nav-right">
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Step Indicator -->
+<div class="step-indicator" style="margin-top:90px;">
+  <div class="step-item">
+    <div class="step-num done">✓</div>
+    <span class="step-label">Cart</span>
+  </div>
+  <div class="step-connector done"></div>
+  <div class="step-item">
+    <div class="step-num done">✓</div>
+    <span class="step-label">Shipping</span>
+  </div>
+  <div class="step-connector done"></div>
+  <div class="step-item">
+    <div class="step-num done">✓</div>
+    <span class="step-label">Payment</span>
+  </div>
+  <div class="step-connector done"></div>
+  <div class="step-item">
+    <div class="step-num done" style="background:var(--gold);color:var(--black);">✓</div>
+    <span class="step-label active">Confirmed</span>
+  </div>
+</div>
+
+<main style="padding-top:60px;padding-bottom:80px;min-height:calc(100vh - 200px);">
+  <div class="wrap">
+    <div style="max-width:760px;margin:0 auto;">
+
+      <!-- Success header -->
+      <div style="text-align:center;margin-bottom:48px;">
+        <div style="display:flex;justify-content:center;margin-bottom:28px;">
+          <svg class="checkmark-svg" width="80" height="80" viewBox="0 0 80 80" fill="none" style="filter:drop-shadow(0 0 20px rgba(201,169,110,.3));">
+            <circle cx="40" cy="40" r="39" stroke="var(--gold)" stroke-width="1" />
+            <path d="M25 40 L35 52 L55 30" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+        </div>
+        <span class="t-label" style="color:var(--gold);font-size:.65rem;letter-spacing:.3em;display:block;margin-bottom:16px;">Order Confirmed</span>
+        <h1 style="font-family:'Cormorant',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:300;line-height:.92;margin-bottom:16px;">
+          Thank You for<br><em style="font-style:italic;color:var(--gold);">Your Order</em>
+        </h1>
+        <p style="font-size:.9rem;color:var(--white-faint);line-height:1.75;max-width:500px;margin:0 auto 12px;">
+          Your luxury fragrance is being prepared with the same care that goes into every bottle. A confirmation email has been sent to your inbox.
+        </p>
+        <p id="order-number-display" style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);letter-spacing:.1em;"></p>
+      </div>
+
+      <!-- Order details card -->
+      <div style="background:var(--bg-blush);border:1px solid var(--border);padding:32px;margin-bottom:28px;">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;color:var(--black);">
+          <span>Order Details</span>
+          <span id="order-date" style="font-size:.7rem;color:var(--white-faint);font-family:'Jost',sans-serif;letter-spacing:.12em;align-self:flex-end;"></span>
+        </h3>
+        <div id="order-items"></div>
+        <div id="order-totals"></div>
+      </div>
+
+      <!-- Shipping + timeline -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;" class="success-dual-grid">
+
+        <!-- Shipping address -->
+        <div style="background:var(--bg-blush);border:1px solid var(--border);padding:24px;">
+          <h4 style="font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">📍 Delivering To</h4>
+          <div id="success-address" style="font-size:.82rem;color:var(--white-faint);line-height:1.7;"></div>
+        </div>
+
+        <!-- Order timeline -->
+        <div style="background:var(--bg-blush);border:1px solid var(--border);padding:24px;">
+          <h4 style="font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">🚚 Delivery Timeline</h4>
+          <div class="timeline" id="order-timeline"></div>
+        </div>
+
+      </div>
+
+      <!-- What's next -->
+      <div style="background:var(--bg-blush);border:1px solid var(--border);padding:28px;margin-bottom:32px;">
+        <h4 style="font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">What Happens Next</h4>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;" id="next-steps">
+          <div style="text-align:center;padding:16px 8px;">
+            <div style="font-size:1.8rem;margin-bottom:10px;">📧</div>
+            <div style="font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white-faint);font-family:'Jost',sans-serif;line-height:1.5;">Email Confirmation<br><span style="color:var(--black);">Sent now</span></div>
+          </div>
+          <div style="text-align:center;padding:16px 8px;">
+            <div style="font-size:1.8rem;margin-bottom:10px;">🏺</div>
+            <div style="font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white-faint);font-family:'Jost',sans-serif;line-height:1.5;">Atelier Preparation<br><span style="color:var(--black);">1–2 business days</span></div>
+          </div>
+          <div style="text-align:center;padding:16px 8px;">
+            <div style="font-size:1.8rem;margin-bottom:10px;">📦</div>
+            <div style="font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white-faint);font-family:'Jost',sans-serif;line-height:1.5;">Shipped &amp; Tracked<br><span style="color:var(--black);">Tracking email sent</span></div>
+          </div>
+          <div style="text-align:center;padding:16px 8px;">
+            <div style="font-size:1.8rem;margin-bottom:10px;">🎁</div>
+            <div style="font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white-faint);font-family:'Jost',sans-serif;line-height:1.5;">Delivered<br><span style="color:var(--black);">In luxury packaging</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html#collection" class="btn btn-gold">
+          <span>Continue Shopping</span>
+        </a>
+        <a href="index.html" class="btn btn-outline">
+          <span>Back to Home</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>© 2024 <span>Amazon Perfumes</span>. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/shop.js"></script>
+<script>
+var fmt2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+function cur(v) { return fmt2.format(v); }
+
+window._pageInitDone = true;
+document.addEventListener('DOMContentLoaded', function() {
+  updateCartBadge();
+  spawnConfetti();
+  renderOrderSuccess();
+});
+
+function renderOrderSuccess() {
+  var order = JSON.parse(localStorage.getItem('amazonPerfumesOrder') || '{}');
+  if (!order.orderNumber) {
+    // No order found — redirect gracefully
+    document.querySelector('main').innerHTML = '<div class="wrap" style="text-align:center;padding:120px 24px;"><h2 style="font-family:\'Cormorant\',serif;font-size:2.5rem;margin-bottom:16px;">No order found</h2><p style="color:var(--white-faint);margin-bottom:32px;">It looks like you haven\'t placed an order yet.</p><a href="index.html#collection" class="btn btn-gold"><span>Browse Collection</span></a></div>';
+    return;
+  }
+
+  var cart    = order.cart || [];
+  var shipping = order.shipping || {};
+  var total    = order.total || 0;
+  var subTotal = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  var deliveryCost = shipping.deliveryCost || 0;
+
+  // Order number + date
+  document.getElementById('order-number-display').textContent = 'Order #' + order.orderNumber;
+  var d = new Date(order.timestamp || Date.now());
+  document.getElementById('order-date').textContent = d.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  // Items
+  var itemsHTML = cart.map(function(item) {
+    return '<div style="display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">' +
+      '<div style="width:60px;height:76px;overflow:hidden;border:1px solid var(--border);flex-shrink:0;">' +
+        '<img src="' + item.image + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;" />' +
+      '</div>' +
+      '<div style="flex:1;">' +
+        '<div style="font-size:.88rem;color:var(--black);margin-bottom:4px;">' + item.name + '</div>' +
+        '<div style="font-size:.65rem;color:var(--white-faint);font-family:\'Jost\',sans-serif;">' + item.size + ' &middot; ' + item.conc + ' &middot; Qty: ' + item.qty + '</div>' +
+      '</div>' +
+      '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.05rem;color:var(--gold);">' + cur(item.price * item.qty) + '</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('order-items').innerHTML = itemsHTML;
+
+  // Totals
+  document.getElementById('order-totals').innerHTML =
+    '<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:.8rem;color:var(--black);"><span>Subtotal</span><span>' + cur(subTotal) + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:.8rem;color:var(--black);"><span>Shipping</span><span style="color:' + (deliveryCost ? 'var(--black)' : '#2e7d4f') + ';">' + (deliveryCost ? cur(deliveryCost) : 'Free') + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:14px 0;border-top:1px solid var(--border);margin-top:4px;">' +
+      '<span style="font-family:\'Cormorant Garamond\',serif;font-size:1rem;color:var(--black);">Total Paid</span>' +
+      '<span style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;color:var(--gold);">' + cur(total) + '</span>' +
+    '</div>' +
+    '<div style="font-size:.65rem;color:var(--white-faint);font-family:\'Jost\',sans-serif;letter-spacing:.1em;">Paid via ' + (paymentMethodLabel(order.method)) + '</div>';
+
+  // Address
+  var addrEl = document.getElementById('success-address');
+  if (shipping.fullname) {
+    addrEl.innerHTML =
+      '<strong style="color:var(--black);">' + shipping.fullname + '</strong><br>' +
+      shipping.address + (shipping.address2 ? ', ' + shipping.address2 : '') + '<br>' +
+      shipping.city + ', ' + shipping.state + ' ' + shipping.zip + '<br>' +
+      shipping.country + '<br>' +
+      '<span style="color:var(--white-faint);">' + (shipping.phone || '') + '</span>';
+  } else {
+    addrEl.textContent = 'Address not available.';
+  }
+
+  // Timeline
+  var baseDate = new Date();
+  var stdDays  = (shipping.delivery === 'express') ? 3 : 7;
+  var d1 = new Date(baseDate); d1.setDate(d1.getDate() + 1);
+  var d2 = new Date(baseDate); d2.setDate(d2.getDate() + 2);
+  var d3 = new Date(baseDate); d3.setDate(d3.getDate() + stdDays);
+  var dateOpts = { weekday:'short', month:'short', day:'numeric' };
+
+  document.getElementById('order-timeline').innerHTML =
+    '<div class="timeline-item"><div class="tl-dot done">✓</div><div class="tl-content"><div class="tl-title">Order Confirmed</div><div class="tl-sub">Today · ' + baseDate.toLocaleDateString('en-US', dateOpts) + '</div></div></div>' +
+    '<div class="timeline-item"><div class="tl-dot done">✓</div><div class="tl-content"><div class="tl-title">Payment Received</div><div class="tl-sub">Today · ' + paymentMethodLabel(order.method) + '</div></div></div>' +
+    '<div class="timeline-item"><div class="tl-dot">🏺</div><div class="tl-content"><div class="tl-title">Atelier Preparation</div><div class="tl-sub">Expected by ' + d1.toLocaleDateString('en-US', dateOpts) + '</div></div></div>' +
+    '<div class="timeline-item"><div class="tl-dot">📦</div><div class="tl-content"><div class="tl-title">Shipped</div><div class="tl-sub">Expected by ' + d2.toLocaleDateString('en-US', dateOpts) + '</div></div></div>' +
+    '<div class="timeline-item"><div class="tl-dot">🎁</div><div class="tl-content"><div class="tl-title">Delivered</div><div class="tl-sub">Expected by ' + d3.toLocaleDateString('en-US', dateOpts) + '</div></div></div>';
+}
+
+function paymentMethodLabel(method) {
+  var map = { card: 'Credit / Debit Card', upi: 'UPI', wallet: 'Wallet / Net Banking', cod: 'Cash on Delivery' };
+  return map[method] || method || 'Card';
+}
+
+function spawnConfetti() {
+  var colors = ['#c9a96e', '#e2c98a', '#f0ede8', '#6b5530', '#a07840'];
+  for (var i = 0; i < 60; i++) {
+    (function(i) {
+      setTimeout(function() {
+        var el = document.createElement('div');
+        el.className = 'confetti-piece';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.top = '-10px';
+        el.style.background = colors[Math.floor(Math.random() * colors.length)];
+        el.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        el.style.animationDuration = (2 + Math.random() * 2) + 's';
+        el.style.animationDelay = (Math.random() * 0.5) + 's';
+        el.style.width = el.style.height = (6 + Math.random() * 8) + 'px';
+        document.body.appendChild(el);
+        setTimeout(function() { el.remove(); }, 4000);
+      }, i * 40);
+    })(i);
+  }
+}
+</script>
+</body>
+</html>

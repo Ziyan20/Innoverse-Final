@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amazon Perfumes — Scent of Distinction</title>
+  <meta name="description" content="Amazon Perfumes — A luxury fragrance maison. Rare ingredients, timeless craftsmanship, bottled elegance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:ital,wght@0,300;0,700;1,300;1,700&family=Inter:wght@300;400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <!-- Three.js (global build — no modules needed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+</head>
+<body>
+
+<!-- ══ LOADING ══════════════════════════════════════════════ -->
+<div id="loading" aria-hidden="true">
+  <div class="loading-logo-wrap">
+    <img src="assets/images/logo.jpg" alt="Amazon Perfumes logo" />
+  </div>
+  <div class="loading-progress">
+    <div class="loading-progress-bar"></div>
+  </div>
+  <div class="loading-num" id="loading-num">0</div>
+</div>
+
+<!-- ══ CURSOR ═══════════════════════════════════════════════ -->
+<div id="cursor" aria-hidden="true">
+  <div id="cursor-ball"></div>
+  <div id="cursor-dot2"></div>
+</div>
+
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
+<div id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <button class="menu-close" id="menu-close" aria-label="Close menu">✕</button>
+  <a href="index.html#collection">Collection</a>
+  <a href="index.html#story">Our Story</a>
+  <a href="index.html#viewer">Explore</a>
+  <a href="gift-sets.html">Gift Sets</a>
+  <a href="index.html#testimonials">Reviews</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- ══ NAVIGATION ════════════════════════════════════════════ -->
+<header id="nav" role="banner">
+  <div class="nav-bar">
+
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo" aria-label="Amazon Perfumes — Home">
+      <img src="assets/images/logo.jpg" alt="Amazon Perfumes monogram" />
+      <div class="nav-wordmark">
+        Amazon Perfumes
+        <small>Luxury Fragrance Maison</small>
+      </div>
+    </a>
+
+    <!-- Center links -->
+    <nav class="nav-center" aria-label="Primary navigation">
+      <a href="#collection">Collection</a>
+      <a href="#story">Our Story</a>
+      <a href="#viewer">Explore</a>
+      <a href="gift-sets.html">Gift Sets</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Right actions -->
+    <div class="nav-right">
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </a>
+      <button id="hamburger" class="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ HERO ══════════════════════════════════════════════ -->
+  <section id="hero" aria-label="Hero — Scent of Distinction">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-pre">
+          <div class="hero-pre-line" aria-hidden="true"></div>
+          <span>Est. 1994 · Paris · Amazon Basin</span>
+        </div>
+
+        <h1 class="hero-h1">
+          Scent of<br>
+          <em>Distinction</em>
+        </h1>
+
+        <p class="hero-sub">
+          Rare botanicals from the Amazon rainforest,
+          distilled by master perfumers in Paris.
+          A fragrance is not worn — it is lived.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#collection" class="btn btn-gold" id="hero-explore-btn">
+            <span>Explore Collection</span>
+          </a>
+          <a href="#story" class="btn btn-outline" id="hero-story-btn">
+            <span>Our Story</span>
+          </a>
+        </div>
+      </div>
+      <!-- Right side occupied by Three.js blob -->
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ══ MARQUEE ════════════════════════════════════════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Rare Ingredients</span><span class="m-dot">✦</span>
+      <span>Handcrafted in Paris</span><span class="m-dot">✦</span>
+      <span>30 Years of Mastery</span><span class="m-dot">✦</span>
+      <span>Free Global Shipping</span><span class="m-dot">✦</span>
+      <span>Complimentary Engraving</span><span class="m-dot">✦</span>
+      <span>Bespoke Creations</span><span class="m-dot">✦</span>
+      <span>120 Unique Fragrances</span><span class="m-dot">✦</span>
+      <span>Rare Ingredients</span><span class="m-dot">✦</span>
+      <span>Handcrafted in Paris</span><span class="m-dot">✦</span>
+      <span>30 Years of Mastery</span><span class="m-dot">✦</span>
+      <span>Free Global Shipping</span><span class="m-dot">✦</span>
+      <span>Complimentary Engraving</span><span class="m-dot">✦</span>
+      <span>Bespoke Creations</span><span class="m-dot">✦</span>
+      <span>120 Unique Fragrances</span><span class="m-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ══ MANIFESTO ══════════════════════════════════════════ -->
+  <section id="manifesto" aria-labelledby="manifesto-heading">
+    <div class="manifesto-number" aria-hidden="true">AP</div>
+    <div class="manifesto-inner">
+      <div class="manifesto-label">
+        <span class="t-label gold">Our Philosophy</span>
+        <span class="line" style="margin-top:12px;"></span>
+      </div>
+      <p class="manifesto-text" id="manifesto-heading">
+        A fragrance is the most intimate form of
+        self-expression. It exists <em>between</em> moments —
+        in the air after you leave a room,
+        in a memory that returns without warning,
+        in the quiet hour before dawn.
+        We bottle <em>that</em>.
+      </p>
+      <p class="manifesto-sig">— Henri Leclerc, Maître Parfumeur</p>
+    </div>
+  </section>
+
+  <!-- ══ BRAND STORY ════════════════════════════════════════ -->
+  <section id="story" aria-labelledby="story-heading">
+    <div class="wrap">
+      <div class="story-grid">
+
+        <div class="story-text-col">
+          <p class="story-label t-label gold">Heritage</p>
+          <h2 class="story-title" id="story-heading">
+            Born from the<br>
+            <em>Heart of the Amazon</em>
+          </h2>
+          <p class="story-body">
+            In 1994, Henri Leclerc ventured deep into the Amazon basin — not for commerce, but for curiosity. What he found changed fragrance forever: wild orchids thriving in volcanic soil, ancient resins weeping gold, botanicals unknown to Western noses.
+          </p>
+          <p class="story-body">
+            Today, every Amazon Perfumes bottle carries that spirit of discovery. Our Paris atelier blends these extraordinary ingredients with three decades of olfactory mastery, producing scents not merely worn — but <strong style="color:var(--white);font-weight:400;">experienced</strong>.
+          </p>
+          <div class="story-founder">
+            <div class="story-founder-avatar" aria-hidden="true">H</div>
+            <div>
+              <div class="story-founder-name">Henri Leclerc</div>
+              <div class="story-founder-title">Founder & Master Perfumer · Paris</div>
+            </div>
+          </div>
+          <div style="margin-top:48px;">
+            <a href="#collection" class="btn btn-gold" id="story-cta-btn">
+              <span>Discover the Collection</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="story-img-wrap">
+          <img src="assets/images/brand_story_bg.jpg"
+               alt="Vintage perfume atelier lit by amber candlelight" loading="lazy" />
+          <div class="story-img-overlay" aria-hidden="true"></div>
+          <div class="story-img-tag" aria-label="Established 1994">
+            <div class="yr">1994</div>
+            <div class="yr-label">Established</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COLLECTION ═════════════════════════════════════════ -->
+  <section id="collection" aria-labelledby="collection-heading">
+    <div class="wrap">
+
+      <div class="collection-head">
+        <div class="collection-head-left">
+          <p class="t-label gold">The Collection</p>
+          <span class="line left"></span>
+          <h2 class="collection-title" id="collection-heading">
+            Curated<br><em>Masterpieces</em>
+          </h2>
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter by category">
+          <button class="filter-btn on" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="floral">Floral</button>
+          <button class="filter-btn" data-filter="oriental">Oriental</button>
+          <button class="filter-btn" data-filter="woody">Woody</button>
+          <button class="filter-btn" data-filter="fresh">Fresh</button>
+        </div>
+      </div>
+
+      <div class="product-grid" role="list" aria-label="Perfume collection">
+
+        <!-- 1 — Nuit d'Or -->
+        <article class="pcard" data-category="oriental" data-product-id="nuit-dor"
+                 role="listitem" aria-label="Nuit d'Or perfume">
+          <div class="pcard-img">
+            <img src="assets/images/perfume_nuit_dor.jpg"
+                 alt="Nuit d'Or — obsidian luxury perfume bottle" loading="lazy" />
+            <span class="pcard-badge">Bestseller</span>
+            <button class="pcard-wish" aria-label="Wishlist Nuit d'Or">♡</button>
+            <div class="pcard-overlay" aria-hidden="true">
+              <button class="pcard-quick quick-btn">Quick Add</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-cat">Oriental</p>
+            <div class="pcard-stars" aria-label="5 stars">★★★★★</div>
+            <h3 class="pcard-name">Nuit d'Or</h3>
+            <p class="pcard-notes">
+              <b>Top:</b> Bergamot, Black Pepper &nbsp;·&nbsp;
+              <b>Heart:</b> Jasmine, Oud &nbsp;·&nbsp;
+              <b>Base:</b> Amber, Musk
+            </p>
+            <div class="pcard-footer">
+              <div>
+                <div class="pcard-price">$189</div>
+                <div class="pcard-size">50ml EDP</div>
+              </div>
+              <button class="pcard-add product-add-btn" aria-label="Add Nuit d'Or to cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 — Lumière Dorée -->
+        <article class="pcard" data-category="floral" data-product-id="lumiere-doree"
+                 role="listitem" aria-label="Lumière Dorée perfume">
+          <div class="pcard-img">
+            <img src="assets/images/perfume_lumiere_doree.jpg"
+                 alt="Lumière Dorée — ornate Arabian perfume bottle" loading="lazy" />
+            <span class="pcard-badge">New Arrival</span>
+            <button class="pcard-wish" aria-label="Wishlist Lumière Dorée">♡</button>
+            <div class="pcard-overlay" aria-hidden="true">
+              <button class="pcard-quick quick-btn">Quick Add</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-cat">Floral</p>
+            <div class="pcard-stars" aria-label="5 stars">★★★★★</div>
+            <h3 class="pcard-name">Lumière Dorée</h3>
+            <p class="pcard-notes">
+              <b>Top:</b> Citrus, Neroli &nbsp;·&nbsp;
+              <b>Heart:</b> Rose, Ylang-Ylang &nbsp;·&nbsp;
+              <b>Base:</b> Sandalwood, Vanilla
+            </p>
+            <div class="pcard-footer">
+              <div>
+                <div class="pcard-price">$220</div>
+                <div class="pcard-size">75ml EDP</div>
+              </div>
+              <button class="pcard-add product-add-btn" aria-label="Add Lumière Dorée to cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 — Crystal Noir -->
+        <article class="pcard" data-category="fresh" data-product-id="crystal-noir"
+                 role="listitem" aria-label="Crystal Noir perfume">
+          <div class="pcard-img">
+            <img src="assets/images/perfume_crystal_noir.jpg"
+                 alt="Crystal Noir — geometric faceted crystal bottle" loading="lazy" />
+            <button class="pcard-wish" aria-label="Wishlist Crystal Noir">♡</button>
+            <div class="pcard-overlay" aria-hidden="true">
+              <button class="pcard-quick quick-btn">Quick Add</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-cat">Fresh</p>
+            <div class="pcard-stars" aria-label="5 stars">★★★★★</div>
+            <h3 class="pcard-name">Crystal Noir</h3>
+            <p class="pcard-notes">
+              <b>Top:</b> Grapefruit, Neroli &nbsp;·&nbsp;
+              <b>Heart:</b> Iris, Violet &nbsp;·&nbsp;
+              <b>Base:</b> Vetiver, Cedar
+            </p>
+            <div class="pcard-footer">
+              <div>
+                <div class="pcard-price">$165</div>
+                <div class="pcard-size">50ml EDT</div>
+              </div>
+              <button class="pcard-add product-add-btn" aria-label="Add Crystal Noir to cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 — Ambre Royal -->
+        <article class="pcard" data-category="oriental" data-product-id="ambre-royal"
+                 role="listitem" aria-label="Ambre Royal perfume">
+          <div class="pcard-img">
+            <img src="assets/images/perfume_ambre_royal.jpg"
+                 alt="Ambre Royal — rich amber glass signature bottle" loading="lazy" />
+            <span class="pcard-badge">Limited Edition</span>
+            <button class="pcard-wish" aria-label="Wishlist Ambre Royal">♡</button>
+            <div class="pcard-overlay" aria-hidden="true">
+              <button class="pcard-quick quick-btn">Quick Add</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-cat">Oriental</p>
+            <div class="pcard-stars" aria-label="5 stars">★★★★★</div>
+            <h3 class="pcard-name">Ambre Royal</h3>
+            <p class="pcard-notes">
+              <b>Top:</b> Cardamom, Saffron &nbsp;·&nbsp;
+              <b>Heart:</b> Oud, Rose &nbsp;·&nbsp;
+              <b>Base:</b> Amber, Benzoin
+            </p>
+            <div class="pcard-footer">
+              <div>
+                <div class="pcard-price">$245</div>
+                <div class="pcard-size">100ml EDP</div>
+              </div>
+              <button class="pcard-add product-add-btn" aria-label="Add Ambre Royal to cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 — Rose Éternelle -->
+        <article class="pcard" data-category="floral" data-product-id="rose-eternelle"
+                 role="listitem" aria-label="Rose Éternelle perfume">
+          <div class="pcard-img">
+            <img src="assets/images/perfume_rose_eternelle.jpg"
+                 alt="Rose Éternelle — rose gold feminine bottle" loading="lazy" />
+            <button class="pcard-wish" aria-label="Wishlist Rose Éternelle">♡</button>
+            <div class="pcard-overlay" aria-hidden="true">
+              <button class="pcard-quick quick-btn">Quick Add</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-cat">Floral</p>
+            <div class="pcard-stars" aria-label="5 stars">★★★★★</div>
+            <h3 class="pcard-name">Rose Éternelle</h3>
+            <p class="pcard-notes">
+              <b>Top:</b> Peach, Aldehyde &nbsp;·&nbsp;
+              <b>Heart:</b> Bulgarian Rose, Peony &nbsp;·&nbsp;
+              <b>Base:</b> Patchouli, Musk
+            </p>
+            <div class="pcard-footer">
+              <div>
+                <div class="pcard-price">$195</div>
+                <div class="pcard-size">75ml EDP</div>
+              </div>
+              <button class="pcard-add product-add-btn" aria-label="Add Rose Éternelle to cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 — Blanc de Blanc -->
+        <article class="pcard" data-category="woody" data-product-id="blanc-de-blanc"
+                 role="listitem" aria-label="Blanc de Blanc perfume">
+          <div class="pcard-img">
+            <img src="assets/images/perfume_blanc_de_blanc.jpg"
+                 alt="Blanc de Blanc — minimal frosted white bottle" loading="lazy" />
+            <span class="pcard-badge">Editor's Pick</span>
+            <button class="pcard-wish" aria-label="Wishlist Blanc de Blanc">♡</button>
+            <div class="pcard-overlay" aria-hidden="true">
+              <button class="pcard-quick quick-btn">Quick Add</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-cat">Woody</p>
+            <div class="pcard-stars" aria-label="5 stars">★★★★★</div>
+            <h3 class="pcard-name">Blanc de Blanc</h3>
+            <p class="pcard-notes">
+              <b>Top:</b> White Musk, Aldehyde &nbsp;·&nbsp;
+              <b>Heart:</b> Lily, Gardenia &nbsp;·&nbsp;
+              <b>Base:</b> Cedarwood, Vetiver
+            </p>
+            <div class="pcard-footer">
+              <div>
+                <div class="pcard-price">$175</div>
+                <div class="pcard-size">50ml EDT</div>
+              </div>
+              <button class="pcard-add product-add-btn" aria-label="Add Blanc de Blanc to cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /product-grid -->
+    </div>
+  </section>
+
+  <!-- ══ EDITORIAL FEATURE — AMBRE ROYAL ═══════════════════ -->
+  <section id="feature" aria-labelledby="feature-heading">
+    <div class="feature-grid">
+
+      <div class="feature-img">
+        <img src="assets/images/perfume_ambre_royal.jpg"
+             alt="Ambre Royal — the signature limited edition" loading="lazy" />
+      </div>
+
+      <div class="feature-text">
+        <p class="feature-label t-label gold">Signature Edition</p>
+        <h2 class="feature-title" id="feature-heading">
+          Ambre Royal<br><em>— The Icon</em>
+        </h2>
+        <p class="feature-body">
+          Distilled from 200-year-old agarwood trees deep in the Amazon and blended with hand-harvested Bulgarian rose. Only 300 bottles are crafted each year. A statement of absolute luxury, worn by those who need no introduction.
+        </p>
+        <div class="feature-details">
+          <div class="feature-detail-item">
+            <div class="lbl">Concentration</div>
+            <div class="val">Extrait de Parfum</div>
+          </div>
+          <div class="feature-detail-item">
+            <div class="lbl">Longevity</div>
+            <div class="val">24 — 36 Hours</div>
+          </div>
+          <div class="feature-detail-item">
+            <div class="lbl">Edition</div>
+            <div class="val">300 Bottles</div>
+          </div>
+        </div>
+        <div class="feature-price">$245</div>
+        <div class="feature-cta">
+          <a href="ambre-royal.html" class="btn btn-gold" id="feature-shop-btn">
+            <span>Shop Now</span>
+          </a>
+          <a href="#viewer" class="btn-text" id="feature-view-btn">Explore in 360°</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 360° VIEWER ════════════════════════════════════════ -->
+  <section id="viewer" aria-labelledby="viewer-heading">
+    <div class="viewer-watermark" aria-hidden="true">360°</div>
+    <div class="wrap">
+      <div class="viewer-grid">
+
+        <div>
+          <canvas id="viewer-canvas"
+            aria-label="Interactive 360-degree perfume bottle — click and drag to rotate">
+          </canvas>
+          <div class="drag-hint" aria-hidden="true">
+            <span class="drag-icon">⟳</span>
+            <span class="t-label" style="font-size:.6rem;letter-spacing:.16em;color:var(--white-faint)">
+              Drag to rotate
+            </span>
+          </div>
+        </div>
+
+        <div class="viewer-info">
+          <p class="viewer-label t-label gold">Interactive</p>
+          <span class="line left"></span>
+          <h2 class="viewer-title" id="viewer-heading">
+            Every<br><em>Facet</em>
+          </h2>
+          <p class="viewer-body">
+            Hand-blown in Murano, Italy. Each bottle is a unique sculptural object. Discover the craftsmanship from every angle — then choose the variant that speaks to you.
+          </p>
+
+          <span class="variants-label">
+            Variant — <span id="variant-name">Gold</span>
+          </span>
+          <div class="swatches" role="group" aria-label="Choose bottle variant">
+            <div>
+              <button class="swatch on" data-v="gold" data-label="Gold" aria-label="Gold"></button>
+              <span class="t-label" style="display:block;text-align:center;font-size:.52rem;color:var(--white-faint);margin-top:6px;letter-spacing:.14em">Gold</span>
+            </div>
+            <div>
+              <button class="swatch" data-v="crystal" data-label="Crystal" aria-label="Crystal"></button>
+              <span class="t-label" style="display:block;text-align:center;font-size:.52rem;color:var(--white-faint);margin-top:6px;letter-spacing:.14em">Crystal</span>
+            </div>
+            <div>
+              <button class="swatch" data-v="noir" data-label="Noir" aria-label="Noir"></button>
+              <span class="t-label" style="display:block;text-align:center;font-size:.52rem;color:var(--white-faint);margin-top:6px;letter-spacing:.14em">Noir</span>
+            </div>
+            <div>
+              <button class="swatch" data-v="rose" data-label="Rosé" aria-label="Rosé"></button>
+              <span class="t-label" style="display:block;text-align:center;font-size:.52rem;color:var(--white-faint);margin-top:6px;letter-spacing:.14em">Rosé</span>
+            </div>
+            <div>
+              <button class="swatch" data-v="emerald" data-label="Emerald" aria-label="Emerald"></button>
+              <span class="t-label" style="display:block;text-align:center;font-size:.52rem;color:var(--white-faint);margin-top:6px;letter-spacing:.14em">Emerald</span>
+            </div>
+          </div>
+
+          <a href="#collection" class="btn btn-gold" id="viewer-add-btn">
+            <span>Add to Collection</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TESTIMONIALS ═══════════════════════════════════════ -->
+  <section id="testimonials" aria-labelledby="testi-heading">
+    <div class="wrap">
+      <div class="testi-label">
+        <p class="t-label gold">Voices</p>
+        <span class="line"></span>
+        <h2 id="testi-heading">
+          What They<br><em>Say</em>
+        </h2>
+      </div>
+
+      <div class="carousel-wrap" aria-label="Customer testimonials">
+        <div class="carousel-track" id="carousel-track" role="list">
+
+          <div class="testi-slide" role="listitem">
+            <div class="testi-card">
+              <span class="testi-quote-icon" aria-hidden="true">❝</span>
+              <div class="testi-stars" aria-label="5 stars">★★★★★</div>
+              <blockquote class="testi-text">
+                "Nuit d'Or is unlike anything I've ever worn. It transforms into something deeply personal — as though it was made for my skin and no one else's."
+              </blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" aria-hidden="true">S</div>
+                <div>
+                  <div class="testi-name">Sophia Laurent</div>
+                  <div class="testi-role">Vogue Beauty Editor, Paris</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-slide" role="listitem">
+            <div class="testi-card">
+              <span class="testi-quote-icon" aria-hidden="true">❝</span>
+              <div class="testi-stars" aria-label="5 stars">★★★★★</div>
+              <blockquote class="testi-text">
+                "I've traveled the world for the finest perfumes. Ambre Royal stopped me in my tracks. The depth, the longevity — a masterwork that deserves its own legacy."
+              </blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" aria-hidden="true">J</div>
+                <div>
+                  <div class="testi-name">James Whitmore</div>
+                  <div class="testi-role">Fragrance Collector, London</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-slide" role="listitem">
+            <div class="testi-card">
+              <span class="testi-quote-icon" aria-hidden="true">❝</span>
+              <div class="testi-stars" aria-label="5 stars">★★★★★</div>
+              <blockquote class="testi-text">
+                "Lumière Dorée is pure joy distilled. The first fragrance that's made me emotional — in the best possible way. An extraordinary house."
+              </blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" aria-hidden="true">A</div>
+                <div>
+                  <div class="testi-name">Aisha Nakamura</div>
+                  <div class="testi-role">Celebrity Stylist, Tokyo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="carousel-nav" role="group" aria-label="Carousel controls">
+        <button id="c-prev" class="c-btn" aria-label="Previous">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+        </button>
+        <div class="c-dots" role="tablist">
+          <div class="c-dot on" role="tab" aria-label="Slide 1"></div>
+          <div class="c-dot" role="tab" aria-label="Slide 2"></div>
+          <div class="c-dot" role="tab" aria-label="Slide 3"></div>
+        </div>
+        <button id="c-next" class="c-btn" aria-label="Next">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ NEWSLETTER ═════════════════════════════════════════ -->
+  <section id="newsletter" aria-labelledby="nl-heading">
+    <div class="wrap">
+      <div class="nl-inner">
+        <div class="nl-label">
+          <p class="t-label gold">Inner Circle</p>
+          <span class="line"></span>
+        </div>
+        <h2 class="nl-title" id="nl-heading">
+          First to<br><em>Know</em>
+        </h2>
+        <p class="nl-body">
+          Join the Amazon Perfumes inner circle. First access to new launches, private events, and the stories behind each creation — delivered with the same care as every bottle.
+        </p>
+        <form class="nl-form" id="nl-form" novalidate aria-label="Newsletter subscription">
+          <input type="email" placeholder="Your email address"
+                 autocomplete="email" required aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="nl-perks" role="list">
+          <span class="nl-perk" role="listitem">Early access to launches</span>
+          <span class="nl-perk" role="listitem">Exclusive member offers</span>
+          <span class="nl-perk" role="listitem">Stories from the atelier</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ AI CHAT WIDGET ═══════════════════════════════════════ -->
+<div class="chat-widget is-open" id="chat-widget" aria-live="polite" aria-expanded="true">
+  <div class="chat-widget__shell" role="dialog" aria-modal="false" aria-label="Customer support chat">
+    <div class="chat-widget__header">
+      <div class="chat-widget__brand" aria-label="Brand logo">
+        <span>A</span>
+      </div>
+      <button class="chat-widget__menu" type="button" aria-label="Chat options">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="chat-widget__content">
+      <div class="chat-widget__messages" id="chat-messages">
+        <div class="message message--bot">
+          <strong>Welcome</strong>
+          <span>How can we help you today?</span>
+        </div>
+        <div class="message message--bot">
+          <span>I can suggest the fragrance that best matches your personality, occasion, and style.</span>
+        </div>
+      </div>
+
+      <div class="chat-widget__choices" id="chat-choices" aria-label="Fragrance preference options">
+        <button type="button" data-choice="floral">Floral</button>
+        <button type="button" data-choice="fresh">Fresh</button>
+        <button type="button" data-choice="oriental">Warm / Oriental</button>
+        <button type="button" data-choice="woody">Woody</button>
+      </div>
+
+      <div class="chat-widget__result" id="chat-result" aria-live="polite"></div>
+    </div>
+
+    <button class="chat-widget__close" type="button" aria-label="Close chat">×</button>
+  </div>
+
+  <button class="chat-widget__fab" type="button" aria-label="Open chat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <path d="M20 12a8 8 0 0 1-12.97 6.39L4 20l1.61-3.03A8 8 0 1 1 20 12Z"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <img src="assets/images/logo.jpg" alt="Amazon Perfumes logo" />
+          <span class="word">Amazon Perfumes</span>
+        </div>
+        <p>A luxury fragrance maison born from the Amazon basin. Crafting scents that define identities since 1994.</p>
+        <div class="socials" aria-label="Social media">
+          <a href="#" class="social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4.5"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="#" class="social" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.3 9.3-.1-.8-.1-2.1.1-3 .2-.8 1.3-5.5 1.3-5.5s-.3-.7-.3-1.7c0-1.6.9-2.8 2.2-2.8 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 4-.3 1.2.6 2.1 1.8 2.1 2.1 0 3.7-2.2 3.7-5.4 0-2.8-2-4.8-4.9-4.8-3.3 0-5.3 2.5-5.3 5.1 0 1 .4 2.1.9 2.7.1.1.1.2.1.3-.1.4-.3 1.3-.3 1.4-.1.2-.2.3-.4.2-1.5-.7-2.4-2.9-2.4-4.7 0-3.8 2.8-7.3 8-7.3 4.2 0 7.5 3 7.5 7 0 4.2-2.6 7.5-6.3 7.5-1.2 0-2.4-.6-2.8-1.4l-.8 2.9c-.3 1.1-1 2.5-1.5 3.3.6.2 1.2.3 1.9.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/>
+            </svg>
+          </a>
+          <a href="#" class="social" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a href="#" class="social" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/>
+              <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Collection</h5>
+        <ul>
+          <li><a href="#collection">All Fragrances</a></li>
+          <li><a href="#collection">New Arrivals</a></li>
+          <li><a href="#collection">Bestsellers</a></li>
+          <li><a href="#collection">Limited Editions</a></li>
+          <li><a href="gift-sets.html">Gift Sets</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>The Maison</h5>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#story">Master Perfumers</a></li>
+          <li><a href="#story">Sustainability</a></li>
+          <li><a href="#story">Press &amp; Media</a></li>
+          <li><a href="#newsletter">Boutiques</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Client Care</h5>
+        <ul>
+          <li><a href="cart.html">My Cart</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Order Tracking</a></li>
+          <li><a href="#">Fragrance Guide</a></li>
+          <li><a href="#newsletter">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 <span>Amazon Perfumes</span>. All rights reserved. Crafted with passion in Paris.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookies</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts (regular — no ES modules) -->
+<script src="js/hero3d.js"></script>
+<script src="js/viewer3d.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
